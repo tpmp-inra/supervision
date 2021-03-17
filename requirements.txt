@@ -1,0 +1,12 @@
+black
+Flask
+Flask-Babel
+Flask-Bootstrap
+Flask-Login
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-WTF
+numpy
+opencv-python
+picamera
+python-dotenv
