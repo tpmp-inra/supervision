@@ -10,6 +10,7 @@ import time
 import threading
 
 import app.constants as consts
+from app.position_data import get_current_position
 
 try:
     from greenlet import getcurrent as get_ident
@@ -68,6 +69,7 @@ class BaseCamera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     event = CameraEvent()
+    position_data = get_current_position()
 
     def __init__(self):
         """Start the background camera thread if it isn't running yet."""
@@ -128,7 +130,9 @@ class Camera(BaseCamera):
                 # return current frame
                 stream.seek(0)
                 watermark_text = (
-                    consts.SUP_NAME + " - " + dt.strftime(dt.now(), "%A %b %Y %H:%M:%S")
+                    BaseCamera.position_data.get("name", "Unknown position")
+                    + " - "
+                    + dt.strftime(dt.now(), "%A %b %Y %H:%M:%S")
                 )
                 fontFace = cv2.FONT_HERSHEY_SIMPLEX
                 fontScale = 0.5

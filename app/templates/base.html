@@ -25,13 +25,26 @@
                     height="24" style="vertical-align:bottom">
                 </a>
                 <a class="navbar-brand mb-0" href="{{ url_for('index') }}">TPMP supervision</a>
+
             </div>
-            <div class="nav navbar-nav navbar-right">
-                {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% endif %}
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Positions<b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            {% for ip in ip_list %}
+                                <li><a href=http://{{ camera_positions.get(ip, {"ip_adress": "#"}).get("ip_adress") }}:5000>{{ camera_positions.get(ip, {"name": "Unknown position"}).get("name") }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>

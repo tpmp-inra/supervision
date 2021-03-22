@@ -6,6 +6,7 @@ from app import app, db
 from app.camera_streamer import Camera
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.position_data import camera_positions, ip_list
 
 
 @app.route("/")
@@ -13,7 +14,11 @@ from app.models import User
 @login_required
 def index():
     """Video streaming home page."""
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        camera_positions=camera_positions,
+        ip_list=ip_list,
+    )
 
 
 def gen(camera):
@@ -47,7 +52,13 @@ def login():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
         return redirect(next_page)
-    return render_template("login.html", title="Sign In", form=form)
+    return render_template(
+        "login.html",
+        title="Sign In",
+        form=form,
+        camera_positions=camera_positions,
+        ip_list=ip_list,
+    )
 
 
 @app.route("/logout")
@@ -68,4 +79,10 @@ def register():
         db.session.commit()
         flash("Congratulations, you are now a registered user!")
         return redirect(url_for("login"))
-    return render_template("register.html", title="Register", form=form)
+    return render_template(
+        "register.html",
+        title="Register",
+        form=form,
+        camera_positions=camera_positions,
+        ip_list=ip_list,
+    )

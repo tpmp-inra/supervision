@@ -1,0 +1,12 @@
+{
+    "192.168.0.22": {
+        "name": "Position 1",
+        "location": "Salon",
+        "ip_adress": "192.168.0.22"
+    },
+    "192.168.0.23": {
+        "name": "Position 2",
+        "location": "Cuisine",
+        "ip_adress": "192.168.0.23"
+    }
+}
