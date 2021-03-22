@@ -1,23 +1,12 @@
 import socket
-import json
+import re, json, requests
 
-ip_list = ["192.168.0.22", "192.168.0.23"]
 
-camera_positions = {
-    ip_list[0]: {
-        "name": "Position 1",
-        "location": "Salon",
-        "ip_adress": ip_list[0],
-    },
-    ip_list[1]: {
-        "name": "Position 2",
-        "location": "Cuisine",
-        "ip_adress": ip_list[1],
-    },
-}
-
-with open("data.txt", "w") as outfile:
-    json.dump(camera_positions, outfile)
+resp = requests.get(
+    "https://raw.githubusercontent.com/tpmp-inra/supervision/main/positions.json"
+)
+camera_positions = json.loads(resp.text)
+ip_list = list(camera_positions.keys())
 
 
 def get_current_position():
